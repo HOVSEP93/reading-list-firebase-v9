@@ -1,9 +1,5 @@
 ## Firebase Version 9
 
-## Demo
-
-Insert gif or link to demo
-
 ## Documentation
 
 [Documentation](https://firebase.google.com/docs/guides?authuser=0)
