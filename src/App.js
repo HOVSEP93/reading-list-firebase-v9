@@ -1,23 +1,37 @@
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter, Route, Routes, Navigate } from 'react-router-dom';
+
+// components
+import Navbar from './components/Navbar';
+import { useAuthContext } from './hooks/useAuthContext';
+import Home from './pages/Home';
+import Login from './pages/Login';
+import Signup from './pages/Signup';
 
 function App() {
+  /* Destructuring the user and authIsReady from the useAuthContext hook. */
+  const { user, authIsReady } = useAuthContext();
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {authIsReady && (
+        <BrowserRouter>
+          <Navbar />
+          {/* A way to render the components based on the path.  */}
+          <Routes>
+            <Route
+              path="/"
+              element={user ? <Home /> : <Navigate to="login" />}
+            />
+            <Route
+              path="signup"
+              element={!user ? <Signup /> : <Navigate to="/" />}
+            />
+            <Route
+              path="login"
+              element={!user ? <Login /> : <Navigate to="/" />}
+            />
+          </Routes>
+        </BrowserRouter>
+      )}
     </div>
   );
 }
